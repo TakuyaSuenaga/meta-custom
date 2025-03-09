@@ -33,11 +33,19 @@ repos:
       meta-multimedia:
   poky:
     refspec: kirkstone
+  meta-ros:
+    url: https://github.com/ros/meta-ros.git
+    path: layers/meta-ros
+    refspec: kirkstone
+    layers:
+      meta-ros-common: included
+      meta-ros2: included
+      meta-ros2-humble: included
 
 machine: generic-arm64
 
 local_conf_header:
-   meta-custom: |
+  meta-custom: |
     FILESEXTRAPATHS:prepend:pn-linux-yocto = "${TOPDIR}/../kernelconfig/:"
     SRC_URI:append:pn-linux-yocto = " file://gravitonKernelConfigs.cfg "
 
@@ -52,6 +60,8 @@ local_conf_header:
     IMAGE_FSTYPES += " wic wic.vhdx"
     DISTRO_FEATURES:append = " ewaol-baremetal"
 
-# target: 
+    IMAGE_INSTALL:append = " ros-core python3-colcon-common-extensions python3-vcstool"
+
+# target:
 #   - ewaol-baremetal-image
 
